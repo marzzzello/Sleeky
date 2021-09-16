@@ -12,12 +12,12 @@
 
         <title><?php echo title ?></title>
 
-        <link rel="stylesheet" href="<?php echo $YOURLS_SITE ?>/frontend/dist/styles.css">
+        <link rel="stylesheet" href="/frontend/dist/styles.css">
 
         <?php if (defined('backgroundImage')) : ?>
             <style>
                 body {
-                    background: url(<?php echo backgroundImage ?>) no-repeat center center fixed !important; 
+                    background: url(<?php echo backgroundImage ?>) no-repeat center center fixed !important;
                     background-size: cover !important;
                 }
             </style>
