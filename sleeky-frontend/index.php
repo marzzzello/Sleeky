@@ -18,7 +18,7 @@
 			// Use reCAPTCHA
 			$token = $_POST['token'];
 			$action = $_POST['action'];
-			
+
 			// call curl to POST request
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL,"https://www.google.com/recaptcha/api/siteverify");
@@ -28,7 +28,7 @@
 			$response = curl_exec($ch);
 			curl_close($ch);
 			$arrResponse = json_decode($response, true);
-			
+
 			// verify the response
 			if($arrResponse["success"] == '1' && $arrResponse["action"] == $action && $arrResponse["score"] >= 0.5) {
 				// reCAPTCHA succeeded
@@ -52,7 +52,7 @@
 
 		// Create short URL, receive array $return with various information
 		$return  = yourls_add_new_link( $url, $keyword, $title );
-		
+
 		// Make visible to UI
 		global $shorturl, $message, $status, $title;
 
@@ -60,7 +60,7 @@
 		$message  = isset( $return['message'] ) ? $return['message'] : '';
 		$title    = isset( $return['title'] ) ? $return['title'] : '';
 		$status   = isset( $return['status'] ) ? $return['status'] : '';
-		
+
 		// Stop here if bookmarklet with a JSON callback function ("instant" bookmarklets)
 		if( isset( $_GET['jsonp'] ) && $_GET['jsonp'] == 'yourls' ) {
 			$short = $return['shorturl'] ? $return['shorturl'] : '';
@@ -85,14 +85,16 @@
 
 						<div class="card-body px-5 pb-5">
 							<h2 class="text-uppercase text-center">Your shortened link</h2>
-							
+
 							<div class="row justify-content-center">
 								<div class="col-10">
 									<div class="input-group input-group-block mt-4 mb-3">
 										<input type="text" class="form-control text-uppercase" value="<?php echo $shorturl; ?>" required>
 										<button class="btn btn-primary text-uppercase py-2 px-5 mt-2 mt-md-0" type="submit" id="copy-button" data-shorturl="<?php echo $shorturl; ?>">Copy</button>
 									</div>
-									<span class="info">View info &amp; stats at <a href="<?php echo $shorturl; ?>+"><?php echo $url; ?>+</a></span>
+									<span class="info">View info &amp; stats at <a href="<?php echo $shorturl; ?>+"><?php echo $url; ?>+</a></span><br />
+									<span class="info">View QR Code <a href="<?php echo $shorturl; ?>.qr"><?php echo $url; ?>.qr</a></span><br />
+									<img src="<?php echo $shorturl; ?>.qr">
 								</div>
 							</div>
 						</div>
@@ -108,7 +110,7 @@
 									<div class="alert alert-danger alert-dismissible fade show" role="alert">
 										<span>Oh no, <?php echo $message; ?>!</span>
 										<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-									</div>	    
+									</div>
 								<?php endif; ?>
 							<?php endif; ?>
 
